@@ -16,10 +16,10 @@ def create_order(
         date: datetime | None = None
 ) -> Order:
     user = User.objects.get(username=username)
-    order = Order.objects.create(user=user)
     if date:
-        order.created_at = date
-        order.save()
+        order = Order.objects.create(user=user, created_at=date)
+    else:
+        order = Order.objects.create(user=user)
 
     for ticket in tickets:
         movie_session = MovieSession.objects.get(id=ticket["movie_session"])
